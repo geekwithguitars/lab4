@@ -75,7 +75,8 @@ Exercise 2A: Find the 7th term of the fibonacci sequence by using the
 the value `best_fib`.
 ......................................................................*)
 
-let best_fib = None ;;
+#mod_use "fibonacci.ml" ;;
+let best_fib = Fibonacci.eval 7 ;;
 
 (*......................................................................
 Exercise 2B: Find the last element of the `Studyplan` sequence, and
@@ -84,6 +85,7 @@ various values in the Studyplan module do to understand how to use
 them.
 ......................................................................*)
 
+#mod_use "studyplan.ml" ;;
 let last_class = None ;;
 
 (*......................................................................
@@ -105,12 +107,44 @@ as much of all three modules as possible, that is, those values and
 functions that have the same name and type.
 ......................................................................*)
 
-(* Uncomment when ready! *)
-(*
+
 module type Sequence =
+module Studyplan :
   sig
-  end;;
-*)
+    type length = Infinite | Finite of int
+    type info = { name : string; length : length; inventor : string; }
+    val length : length
+    val name : string
+    val courses : int array
+    val info : info
+    val inventor : string
+    val exists : int -> bool
+    val eval : int -> int option
+  end
+  module Fibonacci :
+  sig
+    type length = Infinite | Finite of int
+    type info = { name : string; length : length; inventor : string; }
+    val name : string
+    val length : length
+    val inventor : string
+    val info : info
+    val exists : int -> bool
+    val eval : int -> int option
+  end
+  module Inverse :
+  sig
+    type length = Infinite | Finite of int
+    type info = { name : string; inventor : string option; length : length; }
+    val name : string
+    val length : length
+    val inventor : 'a option
+    val info : info
+    val eval : int -> float option
+    val exists : int -> bool
+  end ;;
+
+
 
 (*......................................................................
 Exercise 2D: Now, create new modules, named SequenceFibonacci,
